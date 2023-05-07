@@ -56,3 +56,19 @@ module appService './resources/AppService.bicep' = {
     SQLDatabase
   ]
 }
+
+module functionApp './resources/FunctionApp.bicep' = {
+  name: 'functionApp'
+  scope: resourceGroup(subscriptionId, resourceGroupName)
+  params: {
+    location: location
+    sqlUser: SQLUser
+    sqlServerName: SQLDatabase.outputs.sqlServerName
+    sqlUserPassword: SQLUserPassword
+    appInsightsLocation: location
+    appName: 'marketplace-rjeffvalle'
+  }
+  dependsOn: [
+    SQLDatabase
+  ]
+}
